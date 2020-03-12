@@ -10,7 +10,7 @@ pack-lc-layer: install-lc-deps
 	rm -rf logging_config/.venv/lib/python3.7/site-packages/*.pyc
 	rm -rf logging_config/.venv/lib/python3.7/site-packages/*__pycache__
 	rm -rf logging_config/.venv/lib/python3.7/site-packages/wheel*
-	zip logging_config/lc_layer_pack_$(TIMESTAMP).zip logging_config/.venv/lib/python3.7/site-packages/*
+	zip -rj logging_config/lc_layer_pack_$(TIMESTAMP).zip logging_config/.venv/lib/python3.7/site-packages/*
 	aws s3 cp logging_config/lc_layer_pack_$(TIMESTAMP).zip s3://predict-lambda-layers
 
 deploy-lc-layer: pack-lc-layer
