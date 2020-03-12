@@ -125,12 +125,13 @@ logging_config.dictConfig(
     )
 )
 
-def set_up():
-  structlog.configure(
+def set_up(file):
+    structlog.configure(
       processors=PROCESSORS,
       context_class=dict,
       logger_factory=structlog.stdlib.LoggerFactory(),
       wrapper_class=structlog.stdlib.BoundLogger,
       cache_logger_on_first_use=True,
-  )
+    )
+    return structlog.wrap_logger(logging.getLogger(file))
 #                                --=== \|/ ===--
