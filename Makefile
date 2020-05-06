@@ -1,5 +1,6 @@
 TIMESTAMP:=$(shell date +%s)
 .ONESHELL:
+# NOTE: lc — logging & config
 install-lc-deps:
 	export PIPENV_VENV_IN_PROJECT=1
 	cd logging_config && pipenv install
