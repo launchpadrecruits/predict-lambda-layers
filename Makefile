@@ -19,4 +19,4 @@ pack-requests-layer: install-requests-deps
 	rm -f requests_layer_pack_*.zip
 
 deploy-requests-layer: pack-requests-layer
-	aws cloudformation deploy --template-file requests/templatewyaml --stack-name predict-requests-layer --parameter-overrides Timestamp=$(TIMESTAMP)
+	aws cloudformation deploy --template-file requests/template.yaml --stack-name predict-requests-layer --parameter-overrides Timestamp=$(TIMESTAMP)
