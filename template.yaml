@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  Timestamp:
+    Type: String
+Resources:
+  LoggingConfig:
+    Type: AWS::Lambda::LayerVersion
+    Properties:
+      CompatibleRuntimes:
+        - python3.7
+      Content:
+          S3Bucket: predict-lambda-layers
+          S3Key: !Sub
+            - lc_layer_pack_${Timestamp}.zip
+            - Timestamp:
+                !Ref Timestamp
+      Description: Dependencies required for structured logging and configurations. Structured logging settings.
+      LayerName: LoggingConfig
+Outputs:
+  LoggingConfig:
+    Value: !Ref LoggingConfig
+    Export:
+      Name: LoggingConfig
+
