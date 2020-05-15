@@ -6,10 +6,6 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-structlog = "*"
-buddy-config = "*"
-colorama = "*"
-pygments = "*"
 
 [requires]
 python_version = "3.7"

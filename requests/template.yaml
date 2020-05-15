@@ -3,7 +3,7 @@ Parameters:
   Timestamp:
     Type: String
 Resources:
-  LoggingConfig:
+  Requests:
     Type: AWS::Lambda::LayerVersion
     Properties:
       CompatibleRuntimes:
@@ -11,14 +11,13 @@ Resources:
       Content:
           S3Bucket: predict-lambda-layers
           S3Key: !Sub
-            - lc_layer_pack_${Timestamp}.zip
+            - requests_layer_pack_${Timestamp}.zip
             - Timestamp:
                 !Ref Timestamp
-      Description: Dependencies required for structured logging and configurations. Structured logging settings.
-      LayerName: LoggingConfig
+      Description: Dependencies required for web requests.
+      LayerName: Requests
 Outputs:
-  LoggingConfig:
-    Value: !Ref LoggingConfig
+  Requests:
+    Value: !Ref Requests
     Export:
-      Name: LoggingConfig
-
+      Name: Requests
