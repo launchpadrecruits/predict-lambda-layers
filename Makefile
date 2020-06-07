@@ -1,4 +1,4 @@
-TIMESTAMP:=$(shell date +%s)
+TIMESTAMP:=$(shell date --rfc-3339=seconds | tr -d ' :-' | cut -b 1-12)
 .ONESHELL:
 install-requests-deps:
 	export PIPENV_VENV_IN_PROJECT=1
