@@ -15,6 +15,7 @@ pack-requests-layer: install-requests-deps
 	mv requests/.venv python
 	zip -r requests_layer_pack_$(TIMESTAMP).zip python/lib/python3.7/site-packages/
 	rm -rf python
+	echo "Package size:" `du -hs requests_layer_pack_$(TIMESTAMP).zip`
 	aws s3 cp requests_layer_pack_$(TIMESTAMP).zip s3://predict-lambda-layers
 	rm -f requests_layer_pack_*.zip
 
