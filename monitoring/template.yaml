@@ -5,7 +5,7 @@ Parameters:
   LayerBundle:
     Type: String
 Resources:
-  AwsXraySDK:
+  Monitoring:
     Type: AWS::Lambda::LayerVersion
     Properties:
       CompatibleRuntimes:
@@ -15,10 +15,10 @@ Resources:
         S3Key: !Sub
           - ${LayerBundle}_${Timestamp}.zip
           - Timestamp: !Ref Timestamp
-      Description: AWS X-Ray SDK for Python.
-      LayerName: AwsXraySDK
+      Description: 'Monitoring Layer: Sentry + AWS X-Ray SDK for Python.'
+      LayerName: Monitoring
 Outputs:
-  AwsXraySDK:
-    Value: !Ref AwsXraySDK
+  Monitoring:
+    Value: !Ref Monitoring
     Export:
-      Name: AwsXraySDK
+      Name: Monitoring

@@ -20,4 +20,4 @@ zip -r $layer_bundle_filename python/lib/python3.7/site-packages/
 rm -rf python
 echo "Package size:" `du -hs $layer_bundle_filename`
 aws s3 cp $layer_bundle_filename s3://predict-lambda-layers
-rm -f xray_layer_pack_*.zip
+rm -f $layer_bundle_filename

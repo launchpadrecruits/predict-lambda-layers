@@ -13,16 +13,16 @@ deploy-requests-layer: pack-requests-layer
 	aws cloudformation deploy --template-file requests/template.yaml --stack-name predict-requests-layer --parameter-overrides Timestamp=$(TIMESTAMP)
 
 
-## AWS X-Ray SDK
-install-xray-deps:
+## Monitoring: AWS X-Ray SDK + Sentry
+install-monitoring-deps:
 	export PIPENV_VENV_IN_PROJECT=1
-	cd aws-xray-sdk-python && pipenv install
+	cd monitoring && pipenv install
 
-pack-xray-layer: install-xray-deps
-	bash pack_layer.sh aws-xray-sdk-python xray_layer_pack_$(TIMESTAMP).zip
+pack-monitoring-layer: install-monitoring-deps
+	bash pack_layer.sh monitoring monitoring_layer_pack_$(TIMESTAMP).zip
 
-deploy-xray-layer: pack-xray-layer
-	aws cloudformation deploy --template-file aws-xray-sdk-python/template.yaml --stack-name aws-xray-sdk-layer --parameter-overrides Timestamp=$(TIMESTAMP) LayerBundle=xray_layer_pack
+deploy-monitoring-layer: pack-monitoring-layer
+	aws cloudformation deploy --template-file monitoring/template.yaml --stack-name monitoring-layer --parameter-overrides Timestamp=$(TIMESTAMP) LayerBundle=monitoring_layer_pack
 
 
 
