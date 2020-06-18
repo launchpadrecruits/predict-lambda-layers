@@ -15,8 +15,3 @@ Resources:
           - Timestamp: !Ref Timestamp
       Description: Dependencies required for structured logging and configurations. Structured logging settings.
       LayerName: LoggingConfig
-Outputs:
-  LoggingConfigArn:
-    Value: !Ref LoggingConfig
-    Export:
-      Name: LoggingConfig

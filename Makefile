@@ -10,7 +10,7 @@ pack-lc-layer: install-lc-deps
 	bash pack_layer.sh logging_config lc_layer_pack_$(TIMESTAMP).zip
 
 deploy-lc-layer: pack-lc-layer
-	aws cloudformation deploy --force --template-file logging_config/template.yaml --stack-name predict-lambda-layers --parameter-overrides Timestamp=$(TIMESTAMP) LayerBundle=lc_layer_pack
+	aws cloudformation deploy --force --template-file logging_config/template.yaml --stack-name predict-lc-layers --parameter-overrides Timestamp=$(TIMESTAMP) LayerBundle=lc_layer_pack
 
 
 # requests HTTP client library
