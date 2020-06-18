@@ -17,8 +17,3 @@ Resources:
           - Timestamp: !Ref Timestamp
       Description: 'Monitoring Layer: Sentry + AWS X-Ray SDK for Python.'
       LayerName: Monitoring
-Outputs:
-  Monitoring:
-    Value: !Ref Monitoring
-    Export:
-      Name: Monitoring

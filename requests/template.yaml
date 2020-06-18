@@ -16,8 +16,3 @@ Resources:
                 !Ref Timestamp
       Description: Dependencies required for web requests.
       LayerName: Requests
-Outputs:
-  Requests:
-    Value: !Ref Requests
-    Export:
-      Name: Requests
