@@ -18,6 +18,10 @@ from structlog import processors, stdlib
 
 RESET_COLORS = "\032[0m"
 
+JSON_LOGS = os.environ.get("JSON_LOGS", True)
+COLOR_LOGS = os.environ.get("COLOR_LOGS", False)
+LOG_LEVEL = os.environ.get("LOG_LEVEL", "DEBUG")
+
 
 def datetime_serializer(item):
     """JSON serializer for objects not serializable by default json code"""
@@ -98,15 +102,21 @@ PROCESSORS = [
     add_sourceline,
 ]
 
-if bool(int(os.environ["JSON_LOGS"])):
-    PROCESSORS += [ColoredJsonRenderer(sort_keys=True, indent=4)]
+if JSON_LOGS:
+    if COLOR_LOGS:
+        PROCESSORS += [ColoredJsonRenderer(sort_keys=True, indent=4)]
+    else:
+        PROCESSORS += [structlog.processors.JSONRenderer(sort_keys=True, indent=4)]
 else:
-    PROCESSORS += [
-        colorize_json_values,
-        SourceLineConsoleRenderer(
-            level_styles=structlog.dev.ConsoleRenderer.get_default_level_styles()
-        ),
-    ]
+    if COLOR_LOGS:
+        PROCESSORS += [
+            colorize_json_values,
+            SourceLineConsoleRenderer(
+                level_styles=structlog.dev.ConsoleRenderer.get_default_level_styles()
+            ),
+        ]
+    else:
+        PROCESSORS += [SourceLineConsoleRenderer(colors=False)]
 
 logging_config.dictConfig(
     dict(
@@ -116,21 +126,21 @@ logging_config.dictConfig(
             "stdout": {
                 "class": "logging.StreamHandler",
                 "formatter": "basic",
-                "level": os.environ["LOG_LEVEL"],
+                "level": LOG_LEVEL,
                 "stream": "ext://sys.stdout",
             }
         },
-        root={"level": os.environ["LOG_LEVEL"], "handlers": ["stdout"]},
+        root={"level": LOG_LEVEL, "handlers": ["stdout"]},
     )
 )
 
 def set_up(file):
     structlog.configure(
-      processors=PROCESSORS,
-      context_class=dict,
-      logger_factory=structlog.stdlib.LoggerFactory(),
-      wrapper_class=structlog.stdlib.BoundLogger,
-      cache_logger_on_first_use=True,
+        processors=PROCESSORS,
+        context_class=dict,
+        logger_factory=structlog.stdlib.LoggerFactory(),
+        wrapper_class=structlog.stdlib.BoundLogger,
+        cache_logger_on_first_use=True,
     )
     return structlog.wrap_logger(logging.getLogger(file))
 #                                --=== \|/ ===--
