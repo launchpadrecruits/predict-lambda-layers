@@ -8,6 +8,7 @@ layer_bundle_filename=$2
 
 echo "Bundling $layer_dir into $layer_bundle_filename"
 
+cp $layer_dir/*.py $layer_dir/.venv/lib/python3.7/site-packages/
 find $layer_dir/.venv/lib/python3.7/site-packages/ -name "*.pyc" -type f -delete
 find $layer_dir/.venv/lib/python3.7/site-packages/ -name "__pycache__" -type d -delete
 find $layer_dir/.venv/lib/python3.7/site-packages/ -name "wheel*" -delete
