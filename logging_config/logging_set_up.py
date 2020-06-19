@@ -66,22 +66,6 @@ def add_sourceline(_, __, event_dict):
     return event_dict
 
 
-class SourceLineConsoleRenderer(structlog.dev.ConsoleRenderer):
-    """Format a source line in the metadata of a line log."""
-
-    def __call__(self, _, __, event_dict):
-        sio = io.StringIO()
-        caller = event_dict.pop("caller", None)
-        msg_line = super(SourceLineConsoleRenderer, self).__call__(_, __, event_dict)
-        if caller:
-            sio.write(
-                "{}{}{}: ".format(colorama.Fore.YELLOW, caller, self._styles.reset)
-            )
-            sio.write(msg_line)
-            return sio.getvalue()
-        return msg_line
-
-
 class ColoredJsonRenderer(structlog.processors.JSONRenderer):
     """JSON logs with syntax highlighting."""
 
@@ -109,14 +93,7 @@ if JSON_LOGS:
         PROCESSORS += [structlog.processors.JSONRenderer(sort_keys=True, indent=4)]
 else:
     if COLOR_LOGS:
-        PROCESSORS += [
-            colorize_json_values,
-            SourceLineConsoleRenderer(
-                level_styles=structlog.dev.ConsoleRenderer.get_default_level_styles()
-            ),
-        ]
-    else:
-        PROCESSORS += [SourceLineConsoleRenderer(colors=False)]
+        PROCESSORS += [colorize_json_values]
 
 logging_config.dictConfig(
     dict(
@@ -134,6 +111,7 @@ logging_config.dictConfig(
     )
 )
 
+
 def set_up(file):
     structlog.configure(
         processors=PROCESSORS,
@@ -143,4 +121,6 @@ def set_up(file):
         cache_logger_on_first_use=True,
     )
     return structlog.wrap_logger(logging.getLogger(file))
+
+
 #                                --=== \|/ ===--
