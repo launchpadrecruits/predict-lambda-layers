@@ -1,26 +1,28 @@
 version: 2.1
 executors:
-  docker:
-    - image: circleci/python:3.7
-  environment:
-    PIPENV_VENV_IN_PROJECT: 1
-  working_directory: ~/lambda-layers
+  docker_img:
+    docker:
+      - image: circleci/python:3.7
+    environment:
+      PIPENV_VENV_IN_PROJECT: 1
+    working_directory: ~/lambda-layers
 
 jobs:
   deploy-layers:
+    executor: docker_img
     steps:
       - checkout
       - run:
-        name: Deploy layers
-        command: make deploy-layers
+          name: Deploy layers
+          command: make deploy-layers
 
 workflows:
   version: 2
   deploy-layers:
     jobs:
-      deploy-layers:
-        filters:
-          tags:
-            ignore: /.*/
-          branches:
-            only: master
+      - deploy-layers:
+          filters:
+            tags:
+              ignore: /.*/
+            branches:
+              only: master
