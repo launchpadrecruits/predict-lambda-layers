@@ -9,13 +9,13 @@ layer_bundle_filename=$2
 echo "Bundling $layer_dir into $layer_bundle_filename"
 
 cp $layer_dir/*.py $layer_dir/.venv/lib/python3.7/site-packages/
-find $layer_dir/.venv/lib/python3.7/site-packages/ -name "*.pyc" -type f -delete
-find $layer_dir/.venv/lib/python3.7/site-packages/ -name "__pycache__" -type d -delete
-find $layer_dir/.venv/lib/python3.7/site-packages/ -name "wheel*" -delete
-find $layer_dir/.venv/lib/python3.7/site-packages/ -name "pip" -delete
-find $layer_dir/.venv/lib/python3.7/site-packages/ -name "setuptools*" -delete
-find $layer_dir/.venv/lib/python3.7/site-packages/ -name "pkg_resources" -delete
-find $layer_dir/.venv/lib/python3.7/site-packages/ -name "*dist-info" -delete
+find $layer_dir/.venv/lib/python3.7/site-packages -name "*.pyc" -print -type f -exec rm -rf {} \;
+find $layer_dir/.venv/lib/python3.7/site-packages -name "__pycache__" -print -type d -exec rm -rf {} \;
+find $layer_dir/.venv/lib/python3.7/site-packages -name "wheel*" -print -exec rm -rf {} \;
+find $layer_dir/.venv/lib/python3.7/site-packages -name "pip*" -print -exec rm -rf {} \;
+find $layer_dir/.venv/lib/python3.7/site-packages -name "setuptools*" -print -exec rm -rf {} \;
+find $layer_dir/.venv/lib/python3.7/site-packages -name "pkg_resources" -print -exec rm -rf {} \;
+find $layer_dir/.venv/lib/python3.7/site-packages -name "*dist-info" -print -exec rm -rf {} \;
 mv $layer_dir/.venv python
 zip -r $layer_bundle_filename python/lib/python3.7/site-packages/
 rm -rf python
