@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ba356198ea5ee551a5a6f85770686929f1fde0118f1adb86fd83ac4b17d563a4"
+            "sha256": "0b38e58c2545846aa0ff8303a1d8cfa51dda9043978684bd82e080c348751ca3"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -18,10 +18,10 @@
     "default": {
         "buddy-config": {
             "hashes": [
-                "sha256:f923d554b05fd1eb55b301534237a764b3d8293ce3574801089b40463c8f0235"
+                "sha256:7ee24cc82d13b1c023a8b2788be50dd5f646ebc746b7c92ddc145acf5ecefb6b"
             ],
             "index": "pypi",
-            "version": "==0.1.5"
+            "version": "==0.1.6"
         },
         "colorama": {
             "hashes": [
