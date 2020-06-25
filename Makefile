@@ -32,7 +32,7 @@ pack-monitoring-layer: install-monitoring-deps
 deploy-layers: pack-lc-layer pack-monitoring-layer pack-requests-layer
 	aws cloudformation deploy \
 		--force --template-file template.yaml \
-		--stack-name predict-lc-layers \
+		--stack-name predict-lambda-layers \
 		--parameter-overrides \
 			LCLatestVersion=$(LOGGING_CONFIG_LATEST_VERSION) \
 			MonitoringLatestVersion=$(MONITORING_LATEST_VERSION) \
