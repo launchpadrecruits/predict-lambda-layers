@@ -51,21 +51,6 @@ def colorize_json_values(_, __, event_dict):
     return new_event_dict
 
 
-def add_sourceline(_, __, event_dict):
-    """Add source line to the current log statement."""
-    rev_stack = list(reversed(stack()))
-    local_frames = (i for i in rev_stack if i.filename == os.path.realpath(__file__))
-    current_frame = next(local_frames)
-    caller = getframeinfo(current_frame[0])
-    event_dict["caller"] = "{}.{}+{}".format(
-        os.path.relpath(caller.filename).rstrip(".py").replace("/", "."),
-        caller.function,
-        caller.lineno,
-    )
-
-    return event_dict
-
-
 class ColoredJsonRenderer(structlog.processors.JSONRenderer):
     """JSON logs with syntax highlighting."""
 
@@ -83,7 +68,6 @@ PROCESSORS = [
     processors.TimeStamper(fmt="iso"),
     processors.format_exc_info,
     processors.StackInfoRenderer(),
-    add_sourceline,
 ]
 
 if JSON_LOGS:
