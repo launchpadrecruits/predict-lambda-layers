@@ -10,6 +10,7 @@ structlog = "*"
 buddy-config = "*"
 colorama = "*"
 pygments = "*"
+structlog-sentry = "*"
 
 [requires]
 python_version = "3.7"
