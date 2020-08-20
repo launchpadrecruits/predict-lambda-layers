@@ -24,6 +24,7 @@ COLOR_LOGS = os.environ.get("COLOR_LOGS", False)
 LOG_LEVEL = os.environ.get("LOG_LEVEL", "DEBUG")
 INDENT = 4
 
+
 def datetime_serializer(item):
     """JSON serializer for objects not serializable by default json code"""
 
