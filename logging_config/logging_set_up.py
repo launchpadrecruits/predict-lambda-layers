@@ -1,12 +1,9 @@
-import io
 import json
 import logging
 import logging.config as logging_config
 import os
 from datetime import date, datetime
-from inspect import getframeinfo, stack
 
-import colorama
 from pygments import highlight
 from pygments.formatters import TerminalFormatter
 from pygments.lexers import JsonLexer
