@@ -1,18 +1,16 @@
-import io
 import json
 import logging
 import logging.config as logging_config
 import os
 from datetime import date, datetime
-from inspect import getframeinfo, stack
 
-import colorama
 from pygments import highlight
 from pygments.formatters import TerminalFormatter
 from pygments.lexers import JsonLexer
 
 import structlog
 from structlog import processors, stdlib
+from structlog_sentry import SentryJsonProcessor
 
 #                             --=== LOGGING ===--
 
@@ -21,6 +19,7 @@ RESET_COLORS = "\032[0m"
 JSON_LOGS = os.environ.get("JSON_LOGS", True)
 COLOR_LOGS = os.environ.get("COLOR_LOGS", False)
 LOG_LEVEL = os.environ.get("LOG_LEVEL", "DEBUG")
+INDENT = 4
 
 
 def datetime_serializer(item):
@@ -72,9 +71,15 @@ PROCESSORS = [
 
 if JSON_LOGS:
     if COLOR_LOGS:
-        PROCESSORS += [ColoredJsonRenderer(sort_keys=True, indent=4)]
+        PROCESSORS += [
+            SentryJsonProcessor(level=logging.ERROR, tag_keys="__all__"),
+            ColoredJsonRenderer(sort_keys=True, indent=INDENT or None),
+        ]
     else:
-        PROCESSORS += [structlog.processors.JSONRenderer(sort_keys=True, indent=4)]
+        PROCESSORS += [
+            SentryJsonProcessor(level=logging.ERROR, tag_keys="__all__"),
+            structlog.processors.JSONRenderer(sort_keys=True, indent=INDENT),
+        ]
 else:
     if COLOR_LOGS:
         PROCESSORS += [colorize_json_values]
